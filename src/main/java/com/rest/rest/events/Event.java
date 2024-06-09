@@ -1,13 +1,16 @@
 package com.rest.rest.events;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Builder @AllArgsConstructor @NoArgsConstructor // 자바 Bean 규약에 따라 Setter도 추가(...)
 @Getter @Setter @EqualsAndHashCode(of = "id") // 모든 field를 사용할 경우 연관관계에서 상호참조로 인한 stack over flow 발생
+@Entity
 public class Event {
 
+    @Id @GeneratedValue
     private Integer id;
     private String name;
     private String description;
@@ -21,5 +24,6 @@ public class Event {
     private int limitOfEnrollment;
     private boolean offline;
     private boolean free;
+    @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 }
