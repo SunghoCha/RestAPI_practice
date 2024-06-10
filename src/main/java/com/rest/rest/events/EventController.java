@@ -1,5 +1,6 @@
 package com.rest.rest.events;
 
+import com.rest.rest.util.EventValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,16 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class EventController {
 
     private final EventService eventService;
-
+    private final EventValidator eventValidator;
     //@Autowired 생성자가 하나만 있고 생성자가 받아올 파라미터가 이미 Bean으로 등록되어 있으면 생략 가능
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, EventValidator eventValidator) {
         this.eventService = eventService;
+        this.eventValidator = eventValidator;
     }
 
     @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody @Validated CreateEventRequest createEventRequest, BindingResult bindingResult) {
+        eventValidator.validate(createEventRequest, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().build();
         }

@@ -97,6 +97,7 @@ public class EventControllerTests {
     }
 
     @Test
+    @DisplayName("데이터로 null이 들어오면 BadRequest")
     public void createEvent_Bad_Request_Empty_Input() throws Exception {
         //given
         CreateEventRequest createEventRequest = CreateEventRequest.builder().build();
@@ -109,6 +110,7 @@ public class EventControllerTests {
     }
 
     @Test
+    @DisplayName("유효하지않은 범위의 데이터가 들어오면 BadRequest")
     public void createEvent_Bad_Request_Wrong_Input() throws Exception {
         //given
         CreateEventRequest createEventRequest = CreateEventRequest.builder()
@@ -116,9 +118,9 @@ public class EventControllerTests {
                 .description("REST API Development with Spring")
                 .beginEnrollmentDateTime(LocalDateTime.of(2018, 11, 23, 14, 21))
                 .closeEnrollmentDateTime(LocalDateTime.of(2018, 11, 24, 14, 21))
-                .beginEventDateTime(LocalDateTime.of(2018, 11, 25, 14, 21))
+                .beginEventDateTime(LocalDateTime.of(2018, 11, 29, 14, 21))
                 .endEventDateTime(LocalDateTime.of(2018, 11, 26, 14, 21))
-                .basePrice(-100)
+                .basePrice(100)
                 .maxPrice(200)
                 .limitOfEnrollment(100)
                 .location("강남역 인프런 회사")
