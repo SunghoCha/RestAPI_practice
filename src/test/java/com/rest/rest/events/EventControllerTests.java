@@ -106,7 +106,8 @@ public class EventControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         //.accept(MediaTypes.HAL_JSON)
                         .content(this.objectMapper.writeValueAsString(createEventRequest)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].objectName").exists());
     }
 
     @Test
